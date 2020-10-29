@@ -35,3 +35,261 @@ class GeometricShape(ABC):
     @abstractmethod
     def print_details(self):
         pass
+        
+#----------------------------circle
+
+
+import math
+from geometric_shape_abstract import GeometricShape
+
+
+class Circle(GeometricShape):
+    
+    def __init__(self, radius = 4):
+        super().__init__()
+        self.__radius = radius
+        
+        
+        
+    
+    
+    def get_raduis(self):
+        return self.__radius
+    
+    def set_radius(self, new_radius):
+        if new_radius <= 0:
+            raise Exception('radius cannot be less than zero')
+        else:
+            self.__radius = new_radius
+    
+    def get_area(self):
+        area = math.pi * (self.__radius * self.__radius)
+        return area
+    
+    def get_circumference(self):
+        circumference = math.pi * (self.__radius * 2)
+        return circumference
+    
+    def get_diameter(self):
+        diameter = self.__radius + self.__radius
+        return diameter
+    
+    def __str__(self):
+        return super().__str__() + ' ' + str(self.__radius)
+    
+    def print_details(self):
+        print (self.__str__())
+    
+    
+    
+    
+c = Circle(3)
+c.print_details()
+    
+    
+    
+#------------------------------triangle
+
+
+
+from geometric_shape_abstract import GeometricShape
+
+
+class Triangle(GeometricShape):
+    
+    def __init__(self, side1 = 3, side2 = 4, side3 = 5):
+        super().__init__()
+        self.__side1 = side1
+        self.__side2 = side2
+        self.__side3 = side3        
+
+
+    def get_side1(self):
+        return self.__side1
+    
+    def get_side2(self):
+        return self.__side2
+    
+    def get_side3(self):
+        return self.__side3
+    
+    def set_side1(self, new_side1):
+        if new_side1 <= 0:
+            raise Exception('the side of the shape cannot be less than zero')
+        else:
+            self.__side1 = new_side1
+    
+    def set_side2(self, new_side2):
+        if new_side2 <= 0:
+            raise Exception('the side of the shape cannot be less than zero')
+        else:
+            self.__side2 = new_side2
+    
+    def set_side3(self, new_side3):
+        if new_side3 <= 0:
+            raise Exception('the side of the shape cannot be less than zero')
+        else:
+            self.__side3 = new_side3
+        
+    
+    def get_perimeter(self):
+        perimeter = self.__side1 + self.__side2 + self.__side3
+        return perimeter
+    
+    def __str__(self):
+        return super().__str__() + ' ' + str(self.__side1) + ' ' + str(self.__side2) + ' ' + str(self.__side3)
+    
+    def print_details(self):
+        print(self.__str__())
+
+
+
+
+
+
+
+
+#-------------------------------- unit test
+
+
+import unittest
+
+from circle import Circle
+from triangle import Triangle
+
+class TestGeometrics(unittest.TestCase):
+    
+    def testing_diameter_with_non_defaults_of_circle_class(self):
+        #arrange - setup
+        non_default_circle_test = Circle(3)
+        
+        
+        
+        # Act - invoke
+        
+        # Assert - validate the behavior/data
+        self.assertEqual(6, non_default_circle_test.get_diameter())
+        
+        
+        
+    def testing_filled_with_non_defaults_of_circle_class(self):
+        
+        non_default_circle_test = Circle(3)
+        non_default_circle_test.set_filled(1)
+
+        self.assertEqual(True, non_default_circle_test.get_filled())
+        
+        
+    def testing_color_with_non_defaults_of_circle_class(self):
+        
+        non_default_circle_test = Circle()
+        non_default_circle_test.set_color('red')
+        
+        self.assertEqual('red', non_default_circle_test.get_color())
+        
+        
+    def testing_circumference_with_non_defaults_of_circle_class(self):
+        
+        non_default_circle_test = Circle(3)
+        
+        self.assertAlmostEqual(18.849, non_default_circle_test.get_circumference(), 1)
+        
+        
+    def testing_area_with_non_defaults_of_circle_class(self):
+        
+        non_default_circle_test = Circle(3)
+        
+        self.assertAlmostEqual(28.274, non_default_circle_test.get_area(), 1)
+        
+        
+        
+    def testing_diameter_with_defaults_of_circle_class(self):
+        #arrange - setup
+        non_default_circle_test = Circle()
+        
+        
+        
+        # Act - invoke
+        
+        # Assert - validate the behavior/data
+        self.assertEqual(8, non_default_circle_test.get_diameter())
+        
+        
+        
+    def testing_filled_with_defaults_of_circle_class(self):
+        
+        non_default_circle_test = Circle()
+        non_default_circle_test.get_filled()
+
+        self.assertEqual(True, non_default_circle_test.get_filled())
+        
+        
+    def testing_color_with_defaults_of_circle_class(self):
+        
+        non_default_circle_test = Circle()
+        non_default_circle_test.get_color()
+        
+        self.assertEqual('green', non_default_circle_test.get_color())
+        
+        
+    def testing_circumference_with_defaults_of_circle_class(self):
+        
+        non_default_circle_test = Circle()
+        
+        self.assertAlmostEqual(25.13274, non_default_circle_test.get_circumference(), 1)
+        
+        
+    def testing_area_with_defaults_of_circle_class(self):
+        
+        non_default_circle_test = Circle()
+        
+        self.assertAlmostEqual(50.26548, non_default_circle_test.get_area(), 1)
+        
+        
+        
+        
+    def testing_perimeter_with_non_defaults_of_triangle_class(self):
+        
+        non_default_triangle_test = Triangle(5, 5, 5)
+        
+        self.assertEqual(15, non_default_triangle_test.get_perimeter())
+    
+    
+    def testing_filled_with_non_defaults_of_triangle_class(self):
+        
+        non_default_triangle_test = Triangle()
+        non_default_triangle_test.set_filled(1)
+
+        self.assertEqual(True, non_default_triangle_test.get_filled())
+        
+        
+    def testing_color_with_non_defaults_of_triangle_class(self):
+        
+        non_default_triangle_test = Triangle()
+        non_default_triangle_test.set_color('red')
+        
+        self.assertEqual('red', non_default_triangle_test.get_color())
+    
+    
+    def testing_perimeter_with_defaults_of_triangle_class(self):
+        
+        non_default_triangle_test = Triangle()
+        
+        self.assertAlmostEqual(12, non_default_triangle_test.get_perimeter(), 1)
+    
+    
+    def testing_filled_with_defaults_of_triangle_class(self):
+        
+        non_default_triangle_test = Triangle()
+        non_default_triangle_test.get_filled()
+
+        self.assertEqual(True, non_default_triangle_test.get_filled())
+        
+        
+    def testing_color_with_defaults_of_triangle_class(self):
+        
+        non_default_triangle_test = Triangle()
+        non_default_triangle_test.get_color()
+        
+        self.assertEqual('green', non_default_triangle_test.get_color())
+
