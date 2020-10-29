@@ -1,0 +1,37 @@
+from abc import ABC, abstractmethod
+class GeometricShape(ABC):
+    
+    def __init__(self, color = 'green', filled = True):
+        self.__color = color
+        self.__filled = filled
+
+    
+    
+    
+    
+    def get_color(self):
+        return self.__color
+    
+    def set_color(self, new_color):
+        self.__color = new_color
+    
+    def is_filled(self):
+        return self.__filled
+    
+    def get_filled(self):
+        return self.__filled
+    
+    def set_filled(self, new_filled):
+        if new_filled == 1:
+            self.__filled = True
+        elif new_filled == 0:
+            self.__filled = False
+        
+    
+    def __str__(self):
+        return self.__color + ' ' + str(self.__filled)
+        
+    
+    @abstractmethod
+    def print_details(self):
+        pass
