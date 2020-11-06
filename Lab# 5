@@ -1,0 +1,114 @@
+class CompoundInterest:
+    
+    def __init__(self, savings=100, interest_rate=10, num_years=10):
+        self.__savings = savings
+        self.__interest_rate = interest_rate
+        self.__num_years = num_years
+        
+    
+    def saving_interest(self, savings, interest_rate, num_years):
+    
+        if self.__num_years > 0:
+            self.__num_years -= 1
+            self.__savings = self.__savings * (1 + self.__interest_rate)
+            self.saving_interest(self.__savings, self.__interest_rate, self.__num_years)
+    
+        elif self.__num_years <= 0:
+            savings_round = round(savings, 2)
+            print('If you invest ${} for {} years at {}% interest you will have {}' .format(old_savings, old_years, self.__interest_rate, savings_round))
+    
+    def adding_saving(self, new_savings):
+    
+        self.__savings = self.__savings + new_savings
+        
+    
+
+    
+
+if __name__ == "__main__":
+    
+    ready = False
+    
+    while ready != True:
+        
+        sav = False
+        new_sav = False
+        inte = False
+        num = False
+        
+        if sav == False:
+            savings = float(input('Enter amount in savings: $'))
+            if savings <= 0:
+                raise Exception('\nThe amount you entered is invalid. It\'s $0 or less.')
+            else:
+                savings = round(savings, 2)
+                print('\nThe amount in your savings is ${}' .format(savings))
+                sav = True
+                
+        if new_sav == False:
+            add_savings = float(input('\nThe amount you want to add: $'))
+            if add_savings <= 0:
+                raise Exception('\nThe amount entered is invalid. Amount added cant be 0 or less.')
+            else:
+                print('\nThe amount added is ${}' .format(add_savings))
+                new_sav = True
+                
+        if inte == False:
+            interest_rate = float(input('Enter interest amount : %'))
+            if interest_rate <= 0:
+                raise Exception('\nThe amount entered is invalid. Interest cannot be 0% or less')
+            else:
+                interest_rate /= 100
+                print('\nYour Interest rate is {}' .format(interest_rate))
+                inte = True
+                
+        if num == False:
+            num_years = int(input('Enter an amount of years for interest to accumulate: '))
+            if num_years <= 0:
+                raise Exception('\nThe amount you entered is invalid. Years cannot be 0 or less.')
+            else:
+                print('\nThe amount of years is {} years.' .format(num_years))
+                num = True
+                
+        
+            
+                
+        if num == True and inte == True and sav == True and new_sav == True:
+            ready = True
+    old_savings = savings
+    old_years = num_years
+    
+    my_savings = CompoundInterest(savings, interest_rate, num_years)
+    new_savings = my_savings.adding_saving(add_savings)
+    
+    my_savings.saving_interest(new_savings, interest_rate, num_years)
+    
+-------------------------------------------
+    
+    
+import unittest
+
+from compound_interest import CompoundInterest
+
+class TestInterest(unittest.TestCase):
+    
+    def test_savings_interest_with_non_defaults(self):
+        non_default_interest = CompoundInterest(1000.00, 6, 10)
+        
+        self.assertAlmostEqual(1790.85, non_default_interest.saving_interest(), 1)
+        
+        
+    def test_savings_interest_with_defaults(self):
+        default_interest = CompoundInterest()
+        
+        self.assertAlmostEqual(259.37, default_interest())
+        
+    def test_adding_savings(self):
+        adding = CompoundInterest(900.00, 6, 10)
+        
+        self.assertAlmostEqual(1790.85, adding.adding_saving(100.00))
+        
+       
+if __name__ == '__main__':
+    unittest.main()
+   
