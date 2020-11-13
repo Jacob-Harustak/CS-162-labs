@@ -1,0 +1,58 @@
+import matplotlib.pyplot as plt
+
+
+high_temp = []
+low_temp = []
+
+months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+
+
+
+
+
+with open('data.txt', 'r') as temp:
+    
+    my_temps = temp.readlines()
+    
+    for t in my_temps:
+        t = t.strip('\n')
+        t = t.split(',')
+        high_temp.append(int(t[0]))
+        low_temp.append(int(t[1]))
+    
+    
+    print(high_temp)
+    print(low_temp)
+    
+
+plt.plot(months, high_temp, color='r', label = 'High', )
+
+plt.plot(months, low_temp, color = 'b', label = 'Low')
+
+plt.title('Monmouth Oregon City Temperatures: Averages by Month')
+plt.xlabel('Months')
+plt.ylabel('Temperature, in fahrenheit degrees')
+plt.legend(shadow=True, loc='upper left')
+#plt.axis([1, 12, 1, 12])
+plt.show()
+
+
+
+#--------------------
+
+#data file
+
+
+46,34
+51,35
+56,37
+61,39
+68,44
+74,48
+82,51
+83,51
+77,48
+65,43
+52,38
+45,34
