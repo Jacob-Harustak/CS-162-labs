@@ -1,0 +1,142 @@
+from adts.iarray import IArray
+
+
+class Array(IArray):
+    def __init__(self, size):
+        if size < 0:
+            raise ValueError('wrong value')
+        else:
+            self.list = [None] * size
+            self._size = size
+
+    def clone(instance):
+        assert isinstance(instance, Array)
+        array = Array(len(instance))
+        for i in range(len(instance)):
+            array[i] = instance[i]
+        return array
+        
+
+    def __getitem__(self, index):
+        if index < (-1 * len(self.list)) or index > len(self.list):
+            raise IndexError('array index out of range.')
+        else:
+            return self.list[index]
+
+    def __setitem__(self, index, data):
+        if index < (-1 * len(self.list)) or index > len(self.list):
+            raise IndexError('array index out of range.')
+        else:
+            self.list[index] = data
+        
+
+    def __len__(self) -> int:
+        return self._size
+
+    def resize(self, new_size):
+        if new_size < 0:
+            raise ValueError('new size connot be less than zero')
+        else:
+            new_data = [None] * new_size
+            i = 0
+            while i < len(self.list):
+                if not(i >= new_size):
+                    new_data.append(i)
+                i += 1
+            if not(i<= new_size):
+                new_data.append([None])
+            self.list = new_data
+            self._size = new_size
+            
+    def __eq__(self, other) -> bool:
+        if self.list == other:
+            return True
+        else:
+            return False
+        
+
+    def __iter__(self):
+        for i in range (len(self.list)):
+            yield self.list[i]
+
+    def __delitem__(self, index):
+        if index < (-1 * len(self.list)) or index > len(self.list):
+            raise IndexError('item not in list')
+        else:
+            self.list.pop(index)
+            
+                
+
+    def __contains__(self, item) -> bool:
+        i = 0
+        for i in len(self.list):
+            if self.list[i] == item:
+                return True
+        return False    
+        
+        
+#--------------------------------------------
+
+import unittest
+
+from adts.array import Array
+
+
+class ArrayTest(unittest.TestCase):
+    def setUp(self):
+        self._array = Array(10)
+        for i in range(len(self._array)):
+            self._array[i] = i
+
+    def test_len(self):
+        self.assertEqual(len(self._array), 10)
+
+    def test_index_operators(self):
+        self._array[3] = 10
+        self.assertEqual(self._array[3], 10)
+
+    def test_copy(self):
+        copied = Array.clone(self._array)
+        for i in range(len(copied)):
+            
+            self.assertEqual(i, copied[i])
+
+    def test_resize(self):
+        
+        self._array.resize(20)
+        self.assertEqual(len(self._array), 20)
+
+    def test_eq(self):
+        array1 = Array(10)
+        array1.__eq__(self._array)
+        
+        self.assertTrue(self._array, array1)
+
+    def test_iter(self):
+        counter = 0
+        for i in self._array:
+            self.assertEqual(counter, i)
+            counter += 1
+
+    def test_del(self):
+        del_item = Array(10)
+        del_item.__delitem[1]
+        self.assertEqual()
+
+    def test_contains(self):
+        raise NotImplementedError()
+
+    def test_index_op_get_exception(self):
+        raise NotImplementedError()
+
+    def test_index_op_set_exception(self):
+        raise NotImplementedError()
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+
+
+        
+        
