@@ -1,0 +1,123 @@
+"""
+Created on Sat Nov 21 11:25:28 2020
+
+@author: Jacob Harustak
+"""
+
+from video_game_search_engine import VideoGameSearchEngine
+from stop_watch import StopWatch
+end = 'Y'
+while end == 'Y':
+
+    video_game = VideoGameSearchEngine()
+    video_game_time = StopWatch()
+
+
+    print('VIDEO GAME SEARCH ENGINE')
+    print('choose search option:')
+    print('(0) ID Number')
+    print('(1) Name')
+    print('(2) Platform')
+    print('(3) Year')
+    print('(4) Genre')
+    print('(5) Publisher')
+    print('(6) Developer')
+    print('(7) Rating')
+    menu = int(input('--> '))
+    
+    search = input('Enter search term(s): ').split(' ')
+    print('Search results:')
+
+    start_time = video_game_time.start_timer()
+    
+    data_list,count = video_game.liner_search_filter(menu, search)
+    
+    VideoGameSearchEngine.print_results(data_list)
+    
+    
+    #amount_found = video_game.amount_found(menu, search)
+    
+    video_game_time.elapsed(count)
+    
+    end = input('Search again? Y = yes and N = No: ')
+
+
+
+#---------------------------------------------------------
+
+
+
+import csv
+import time
+
+with open('video_game_data.csv', 'r') as vg_file:
+    
+    data = [row for row in csv.reader(vg_file)]
+    format_data = '{ID:<10} {Name:<60} {Platform:<15} {Year:<20} {Genre:<20} {Publisher:<20} {Developer:<20} {Rating:<7}'
+    
+    class VideoGameSearchEngine:
+        
+        
+        def __init__(self):
+            self._data = data
+            
+            
+        def liner_search_filter(self, column_index, search_indexes):
+            
+            new_list = []
+            count = 0
+            VideoGameSearchEngine.print_columns(self._data[0])
+           
+            for search_index in search_indexes:
+                
+            
+                for row in self._data:
+                
+                    if search_index in row[column_index]:
+                        new_list.append(row)
+                        count += 1
+            return new_list, count
+                  
+        
+        def amount_found(self, column_index, search_index):
+            amount_found = 0
+            for i in range(len(self._data)):
+                
+                if self._data[i][column_index].find(search_index) >= 0:
+                    amount_found += 1
+            return amount_found
+                        
+                
+        def print_results(print_data):
+            
+            for row in print_data:
+                print(format_data.format(ID=row[0], Name=row[1], Platform=row[2], Year=row[3], Genre=row[4], Publisher=row[5], Developer=row[6], Rating=row[7]))
+                                         
+            
+            
+        def print_columns(column):
+            print(format_data.format(ID=column[0], Name=column[1], Platform=column[2], Year=column[3], Genre=column[4], Publisher=column[5], Developer=column[6], Rating=column[7]))
+            print()
+             
+                
+#-----------------------------------------------------------------------------------------------
+
+
+
+import time
+
+class StopWatch:
+    
+    def __init__(self):
+        self._timer = 0
+    
+    def start_timer(self):
+        self._timer = time.time()
+        
+
+    def elapsed(self, items):
+        time_elapsed = time.time() - self._timer
+        print('\ntotal search time: ', time_elapsed, 'Total results: ', items)
+        
+        
+  
